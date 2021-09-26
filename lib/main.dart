@@ -40,11 +40,7 @@ class MyApp extends StatelessWidget {
             ),
           ),
           /*3*/
-          Icon(
-            Icons.star,
-            color: Colors.red[500],
-          ),
-          const Text('41'),
+          const FavouriteWidget(),
         ],
       ),
     );
@@ -115,5 +111,53 @@ class MyApp extends StatelessWidget {
         ),
       ],
     );
+  }
+}
+
+class FavouriteWidget extends StatefulWidget {
+  const FavouriteWidget({Key? key}) : super(key: key);
+  @override
+  _FavouriteWidgetState createState() => _FavouriteWidgetState();
+}
+
+class _FavouriteWidgetState extends State<FavouriteWidget> {
+  bool _isFavourited = true;
+  int _favouriteCount = 41;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          padding: const EdgeInsets.all(0),
+          child: IconButton(
+            padding: const EdgeInsets.all(0),
+            alignment: Alignment.centerRight,
+            icon: (_isFavourited ? const Icon(Icons.star) : const Icon(Icons.star_border)),
+            color: Colors.red[500],
+            onPressed: _toggleFavourite,
+          ),
+        ),
+        SizedBox(
+          width: 18,
+          child: SizedBox(
+            child: Text('$_favouriteCount'),
+          )
+        )
+      ],
+    );
+  }
+
+  void _toggleFavourite() {
+    setState(() {
+      if (_isFavourited) {
+        _favouriteCount -= 1;
+        _isFavourited = false;
+      } else {
+        _favouriteCount += 1;
+        _isFavourited = true;
+      }
+    });
   }
 }
